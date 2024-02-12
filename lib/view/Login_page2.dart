@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:running_tracker/models/profile.dart';
 import 'package:running_tracker/view/Home_page.dart';
 import 'package:running_tracker/view/NavigatorBottom_page3.dart';
-import 'package:running_tracker/register.dart';
+import 'package:running_tracker/view/register.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage();
@@ -13,7 +13,15 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    Profile profile = Profile(email: '', password: '');
+    Profile profile = Profile(
+        email: '',
+        password: '',
+        name: '',
+        surname: '',
+        birthday: '',
+        gender: '',
+        weight: '',
+        height: '');
 
     return Scaffold(
       body: SafeArea(

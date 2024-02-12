@@ -100,7 +100,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LandingPageController landingPageController =
-        Get.put(LandingPageController(), permanent: false);
+        Get.put(LandingPageController());
     return SafeArea(
         child: Scaffold(
       bottomNavigationBar:
@@ -110,7 +110,7 @@ class LandingPage extends StatelessWidget {
             children: [
               HomePage(),
               ProfilePage(),
-              CommunityPage(),
+              ComunityPage(),
               NotificationPage(),
               SettingPage(),
             ],
