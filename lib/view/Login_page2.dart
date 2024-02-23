@@ -1,138 +1,110 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:running_tracker/color.dart';
+import 'package:running_tracker/controller/logincontrooler.dart';
 import 'package:running_tracker/models/profile.dart';
 import 'package:running_tracker/view/Home_page.dart';
 import 'package:running_tracker/view/NavigatorBottom_page3.dart';
 import 'package:running_tracker/view/register.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage();
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    Profile profile = Profile(
-        email: '',
-        password: '',
-        name: '',
-        surname: '',
-        birthday: '',
-        gender: '',
-        weight: '',
-        height: '');
-
+    final controller = Get.put(LoginController());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Center(
-          child: buildLoginForm(context, formKey, profile),
-        ),
-      ),
-    );
-  }
-
-  Widget buildLoginForm(
-      BuildContext context, GlobalKey<FormState> formKey, Profile profile) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(8),
-          child: Text(
-            'Login',
-            style: TextStyle(fontSize: 50),
-          ),
-        ),
-        Form(
-          key: formKey,
           child: Column(
+        children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          Container(
+              width: 150,
+              height: 150,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.white),
+              child: const Center(
+                  child: Icon(FontAwesomeIcons.personRunning,
+                      size: 100, color: Colors.black))),
+          const Text("Login",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36)),
+          SizedBox(height: 5.h),
+          Center(
+            child: Container(
+                height: 6.h,
+                width: 85.w,
+                decoration: BoxDecoration(border: Border.all(width: 2)),
+                child: TextFormField(
+                    controller: controller.emailcontroller,
+                    scrollPadding: const EdgeInsets.all(1),
+                    decoration: const InputDecoration(
+                        hintText: "Email",
+                        prefixIcon: Icon(FontAwesomeIcons.user)))),
+          ),
+          SizedBox(height: 2.h),
+          Center(
+              child: Container(
+                  height: 6.h,
+                  width: 85.w,
+                  decoration: BoxDecoration(border: Border.all(width: 2)),
+                  child: TextFormField(
+                      controller: controller.passwordcontroller,
+                      scrollPadding: const EdgeInsets.all(1),
+                      decoration: const InputDecoration(
+                          hintText: "Password",
+                          prefixIcon: Icon(FontAwesomeIcons.key))))),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              buildTextFormField(
-                  'please enter your email', TextInputType.emailAddress,
-                  (email) {
-                profile.email = email!;
-              }),
-              buildTextFormField(
-                  'please enter your password', TextInputType.text, (password) {
-                profile.password = password!;
-              }, obscureText: true),
+              TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "forgot password?",
+                    style: TextStyle(color: ColorApp.themecolor),
+                  )),
+              SizedBox(width: 4.5.w),
             ],
           ),
-        ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF6CE5E8),
+          Column(
+            children: [
+              ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0))),
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(Size(85.w, 6.h)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    elevation: MaterialStateProperty.all<double>(0),
+                  ),
+                  onPressed: () => controller.login(),
+                  child: const Text("Login")),
+            ],
           ),
-          onPressed: () async {
-            if (formKey.currentState!.validate()) {
-              formKey.currentState!.save();
-              try {
-                await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                  email: profile.email,
-                  password: profile.password,
-                )
-                    .then((value) {
-                  formKey.currentState!.reset();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return LandingPage();
-                  }));
-                });
-              } on FirebaseAuthException catch (e) {
-                Fluttertoast.showToast(
-                  msg: e.message!,
-                  gravity: ToastGravity.CENTER,
-                );
-              }
-            }
-          },
-          child: const Text(
-            'login',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF6CE5E8),
-          ),
-          onPressed: () => Get.to(() => RegisterScreen()),
-          child: const Text(
-            'Register',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildTextFormField(String hintText, TextInputType keyboardType,
-      void Function(String?) onSaved,
-      {bool obscureText = false}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-          hintText: hintText,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 3, color: Color(0xFF6CE5E8)),
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 3, color: Color(0xFF6CE5E8)),
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 3, color: Color(0xFF6CE5E8)),
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-        ),
-        keyboardType: keyboardType,
-        onSaved: onSaved,
-        obscureText: obscureText,
-      ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Don't have an account?"),
+              TextButton(
+                  onPressed: () => Get.to(() => RegisterScreen()),
+                  child: Text(
+                    "sign up",
+                    style: TextStyle(color: ColorApp.themecolor),
+                  ))
+            ],
+          )
+        ],
+      )),
     );
   }
 }

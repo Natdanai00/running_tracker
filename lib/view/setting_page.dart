@@ -13,11 +13,11 @@ class SettingPage extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: [
-          Spacer(),
+          const Spacer(),
           ElevatedButton.icon(
               onPressed: () => controller.sinout(),
-              icon: Icon(FontAwesomeIcons.arrowRightFromBracket),
-              label: Text("Logout"))
+              icon: const Icon(FontAwesomeIcons.arrowRightFromBracket),
+              label: const Text("Logout"))
         ],
       )),
     );

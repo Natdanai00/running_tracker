@@ -8,15 +8,16 @@ class TrackingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Run Tracker')),
+      appBar: AppBar(title: const Text('Run Tracker')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Time', style: TextStyle(fontSize: 25)),
+            const Text('Time', style: TextStyle(fontSize: 25)),
             Obx(() => Text(
                   trackingController.currentTime.value,
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 50, fontWeight: FontWeight.bold),
                 )),
             // Add other widgets and observables here
           ],

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_tracker/color.dart';
@@ -17,7 +15,7 @@ class LandingPage extends StatelessWidget {
       fontWeight: FontWeight.w500,
       fontSize: 12);
 
-  final TextStyle selectedLabelStyle = TextStyle(
+  final TextStyle selectedLabelStyle = const TextStyle(
       color: Color.fromARGB(255, 255, 255, 255),
       fontWeight: FontWeight.w500,
       fontSize: 12);
@@ -26,7 +24,8 @@ class LandingPage extends StatelessWidget {
 
   buildBottomNavigationMenu(context, landingPageController) {
     return Obx(() => MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1.0)),
         child: SizedBox(
           height: 60,
           child: BottomNavigationBar(
@@ -36,14 +35,14 @@ class LandingPage extends StatelessWidget {
             currentIndex: landingPageController.tabIndex.value,
             backgroundColor: ColorApp.themecolor,
             unselectedItemColor: Colors.white.withOpacity(0.5),
-            selectedItemColor: Color.fromARGB(255, 255, 255, 255),
+            selectedItemColor: const Color.fromARGB(255, 255, 255, 255),
             unselectedLabelStyle: unselectedLabelStyle,
             selectedLabelStyle: selectedLabelStyle,
             items: [
               BottomNavigationBarItem(
                   icon: Container(
-                    margin: EdgeInsets.only(bottom: 7),
-                    child: Icon(
+                    margin: const EdgeInsets.only(bottom: 7),
+                    child: const Icon(
                       FontAwesomeIcons.house,
                       size: 20.0,
                     ),
@@ -52,8 +51,8 @@ class LandingPage extends StatelessWidget {
                   backgroundColor: ColorApp.themecolor),
               BottomNavigationBarItem(
                   icon: Container(
-                    margin: EdgeInsets.only(bottom: 7),
-                    child: Icon(
+                    margin: const EdgeInsets.only(bottom: 7),
+                    child: const Icon(
                       FontAwesomeIcons.circleUser,
                       size: 20.0,
                     ),
@@ -62,8 +61,8 @@ class LandingPage extends StatelessWidget {
                   backgroundColor: ColorApp.themecolor2),
               BottomNavigationBarItem(
                   icon: Container(
-                    margin: EdgeInsets.only(bottom: 7),
-                    child: Icon(
+                    margin: const EdgeInsets.only(bottom: 7),
+                    child: const Icon(
                       FontAwesomeIcons.users,
                       size: 20.0,
                     ),
@@ -72,25 +71,25 @@ class LandingPage extends StatelessWidget {
                   backgroundColor: ColorApp.themecolor),
               BottomNavigationBarItem(
                 icon: Container(
-                  margin: EdgeInsets.only(bottom: 7),
-                  child: Icon(
+                  margin: const EdgeInsets.only(bottom: 7),
+                  child: const Icon(
                     FontAwesomeIcons.bell,
                     size: 20.0,
                   ),
                 ),
                 label: 'Notifications',
-                backgroundColor: Color.fromRGBO(36, 54, 101, 1.0),
+                backgroundColor: const Color.fromRGBO(36, 54, 101, 1.0),
               ),
               BottomNavigationBarItem(
                 icon: Container(
-                  margin: EdgeInsets.only(bottom: 7),
-                  child: Icon(
+                  margin: const EdgeInsets.only(bottom: 7),
+                  child: const Icon(
                     FontAwesomeIcons.gear,
                     size: 20.0,
                   ),
                 ),
                 label: 'Settings',
-                backgroundColor: Color.fromRGBO(36, 54, 101, 1.0),
+                backgroundColor: const Color.fromRGBO(36, 54, 101, 1.0),
               ),
             ],
           ),
@@ -110,8 +109,8 @@ class LandingPage extends StatelessWidget {
             children: [
               HomePage(),
               ProfilePage(),
-              ComunityPage(),
-              NotificationPage(),
+              const ComunityPage(),
+              const NotificationPage(),
               SettingPage(),
             ],
           )),

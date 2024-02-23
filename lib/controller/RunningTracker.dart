@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'dart:async';
 
 class TrackingController extends GetxController {
-  Stopwatch _stopwatch = Stopwatch();
+  Stopwatch stopwatch = Stopwatch();
   Timer? _timer;
 
   // Observables
@@ -11,13 +11,13 @@ class TrackingController extends GetxController {
   // Add other observables you might need like distance, pace, etc.
 
   void startOrStop() {
-    if (!_stopwatch.isRunning) {
-      _stopwatch.start();
-      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-        currentTime.value = _formatDuration(_stopwatch.elapsed);
+    if (!stopwatch.isRunning) {
+      stopwatch.start();
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        currentTime.value = _formatDuration(stopwatch.elapsed);
       });
     } else {
-      _stopwatch.stop();
+      stopwatch.stop();
       isRunning.value = false;
       _timer?.cancel();
     }
@@ -34,7 +34,7 @@ class TrackingController extends GetxController {
   @override
   void onClose() {
     _timer?.cancel();
-    _stopwatch.stop();
+    stopwatch.stop();
     isRunning.value = false;
     super.onClose();
   }
